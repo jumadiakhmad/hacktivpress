@@ -6,8 +6,16 @@
 </template>
 
 <script>
+import Navabr from '@components/Navbar'
 export default {
-  name: 'app'
+  name: 'app',
+  component: {
+    Navbar
+  },
+  created () {
+    this.$store.dispatch('getArticles')
+    this.$store.dispatch('getUser')
+  }
 }
 </script>
 
