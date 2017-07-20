@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
-import Auth from '@/components/Main'
+import Main from '@/components/Main'
 import Auth from '@/components/Auth'
-
+import Create from '@/components/Create'
+import Navbar from '@/components/Navbar'
 Vue.use(Router)
 
 export default new Router({
@@ -17,6 +17,11 @@ export default new Router({
       path: '/registration',
       name: 'Auth',
       component: Auth
+    },
+    {
+      path: '/create',
+      name: 'Create',
+      components: Create
     }
   ]
 })

@@ -7,6 +7,8 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import BootstrapVue from 'bootstrap-vue'
 import { store } from './store/store'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
