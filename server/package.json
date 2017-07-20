@@ -1,0 +1,22 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Hacktiv Press Live Coding",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Blog",
+    "Blog",
+    "Sederhana"
+  ],
+  "author": "jumadi",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "dotenv": "^4.0.0",
+    "jsonwebtoken": "^7.4.1",
+    "mongoose": "^4.11.3"
+  }
+}
