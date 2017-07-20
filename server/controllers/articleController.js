@@ -14,7 +14,7 @@ function createArticle(req,res) {
   newArticle.save( (err, article) => {
     if(err) res.send(err)
     console.log('Create Article Success');
-    res.send(aticle)
+    res.send(article)
   })
 }
 
@@ -27,17 +27,42 @@ function allArticle(req,res) {
 
 }
 
+
+
 function articleByAuthor(req,res) {
 
 }
 
 
 function updateArticle(req,res) {
-  Article.update()
+  Article.findById(req.params.id, (err,article) => {
+    if(err) {
+      res.send(err)
+    } else {
+      if(article.author == req.body.author) {
+        article.title = req.body.article,
+        article.content = req.body.content,
+        article.category = req.body.category,
+        article.updatedAt = new Date()
+
+        article.save( (err,result) => {
+          if(err) res.send(err)
+          console.log('Update Article Succes');
+          res.send(result)
+        })
+      }
+    }
+  })
 }
 
 function deleteArticle(req,res) {
-
+  Article.findOneAndRemove({
+    _id: req.params.id
+  }, (err,article) => {
+    if(err) res.send(err)
+    console.log("Delete Article Success");
+    res.send(article)
+  })
 }
 
 module.exports = {
