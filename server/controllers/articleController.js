@@ -11,16 +11,10 @@ function createArticle(req,res) {
     author: req.body.author,
     createdAt: new Date()
   })
-  newArticle.save( (err,response) => {
-    if(err) {
-      res.send(err)
-    } else {
-      Article.findById().populate('author')
-      .exec( (err,article) => {
-        if(err) res.send(err)
-        res.send(article)
-      })
-    }
+  newArticle.save( (err, article) => {
+    if(err) res.send(err)
+    console.log('Create Article Success');
+    res.send(aticle)
   })
 }
 
@@ -39,12 +33,14 @@ function articleByAuthor(req,res) {
 
 
 function updateArticle(req,res) {
-
+  Article.update()
 }
 
 function deleteArticle(req,res) {
 
 }
 
-module.exports = allArticle, articleByAuthor, createArticle,
-updateArticle, deleteArticle
+module.exports = {
+  allArticle, articleByAuthor, createArticle,
+  updateArticle, deleteArticle
+}

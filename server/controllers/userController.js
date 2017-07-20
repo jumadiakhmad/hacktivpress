@@ -1,47 +1,43 @@
+require('dotenv').config();
 var User = require('../models/userModel');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 var secret = process.env.SECRET_KEY;
 
+function signUp(req, res) {
+  var hash = bcrypt.hashSync(req.body.password, 8)
 
-function signUp(req,res) {
-    let pwd = req.body.password;
-    let newUser = User({
-      name: req.body.name,
-      username: req.body.username,
-      password: req.body.password,
-      email: bcrypt.hashSncy(pwd,8)
-    })
-    newUser.save( (err,user) => {
-      if(err) {
-        res.send(err)
-      } else {
-        console.log("Sign Up Succes");
-        res.send(user)
-      }
-    })
+  var newUser = new User({
+    username: req.body.username,
+    email: req.body.email,
+    password: hash
+  })
+  newUser.save((err, user) => {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(user)
+    }
+  })
 }
 
 function logIn(req, res) {
-  let pwd = req.body.password
-  User.findOne({ username: req.body.username}, (error, response) => {
-    if (error) res.json({msg: `Something error signup: ${error}`, success: false})
-    else {
-      if (bcrypt.compareSync(pwd, response.password)) {
-        let token = jwt.sign({
-          id: response._id,
-          name: response.name,
-          username: response.username,
-          email:response.email
-        }, secret, {expiresIn: '1d'})
-        res.json({
-          msg: 'Success signin',
-          id: response._id,
-          username: response.username,
-          email: response.email,
-          token})
+  let username = req.body.username
+  let password = req.body.password
+  User.findOne({username: username}, (err, user) =>{
+    if(err) {
+      res.send(err)
+    } else {
+      if(user) {
+        bcrypt.compare(password,user.password)
+        .then(result => {
+          if(result) {
+            let token = jwt.sign({ _id: user._id, username: user.username, email: user.email}, secret)
+            res.send(({token: token}))
+          }
+        })
       } else {
-        res.json({msg: `Password is not match`})
+        res.send({msg: 'User tidak ada'})
       }
     }
   })
@@ -72,4 +68,4 @@ function deleteUser(req,res) {
 }
 
 module.exports = { logIn, signUp, allUser, oneUser,
-deleteUser, updateUser }
+deleteUser }
